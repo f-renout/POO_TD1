@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Fibbo2 {
     private static long compteur =0;
 
-    private int nombre;
-    private long[] tampon;
+    private final int nombre;
+    private final long[] tampon;
 
     public Fibbo2(int nombre) {
         this.nombre=nombre;
@@ -35,6 +35,6 @@ public class Fibbo2 {
         System.out.print("entrer le nombre: ");
         int num= Integer.parseInt(sc.nextLine());
         Fibbo2 fib = new Fibbo2(num);
-        System.out.printf("Fib(%d)=%d en %d appels%n",num, fib.fib(),fib.compteur);
+        System.out.printf("Fib(%d)=%d en %d appels%n",num, fib.fib(), compteur);
     }
 }

@@ -17,7 +17,7 @@ public class Pique {
         pieces = new Stack<>();
     }
 
-    private Stack<Piece> pieces;
+    private final Stack<Piece> pieces;
 
     public void add(Piece piece){
         if(pieces.isEmpty()){
@@ -40,7 +40,6 @@ public class Pique {
         String empty = "|";
         String base = "=".repeat(2 * nbPiece - 1);
         List<String> display = new ArrayList<>();
-        int size = 0;
         display.add(createLine(base, nbPiece, nbPiece));
         for(int i = 0 ; i < pieces.size(); i++){
             Piece piece = pieces.elementAt(i);

@@ -17,6 +17,6 @@ public class Fibbo {
         System.out.print("entrer le nombre: ");
         int num= Integer.parseInt(sc.nextLine());
         Fibbo fib = new Fibbo();
-        System.out.printf("Fib(%d)=%d en %d appels%n",num, fib.fib(num),fib.compteur);
+        System.out.printf("Fib(%d)=%d en %d appels%n",num, fib.fib(num), compteur);
     }
 }

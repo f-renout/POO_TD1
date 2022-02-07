@@ -1,6 +1,5 @@
 package exo3.oo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -23,27 +22,27 @@ public class Hanoi {
         centre = new Pique(Position.CENTRE);
         droite = new Pique(Position.DROITE);
 
-        map = Stream.of(gauche,centre,droite).collect(Collectors.toMap(Pique::getPosition, Function.identity()));
-        for(int i= nbPiece ; i >0 ; i--){
+        map = Stream.of(gauche, centre, droite).collect(Collectors.toMap(Pique::getPosition, Function.identity()));
+        for (int i = nbPiece; i > 0; i--) {
             gauche.add(new Piece(i));
         }
     }
 
     public void deplace(int nombre, Position plotDepart, Position plotArrive) {
-        if(nombre==1){
+        if (nombre == 1) {
             System.out.printf("on déplace 1 rondelle de %s à %s%n", plotDepart, plotArrive);
             Piece piece = map.get(plotDepart).getPiece();
             map.get(plotArrive).add(piece);
             print();
         }
-        if(nombre>1) {
+        if (nombre > 1) {
             Position intermetiaire = Position.restant(plotDepart, plotArrive);
             //on bouge les n-1 sur le plot intermediaire
-            deplace(nombre-1, plotDepart, intermetiaire);
+            deplace(nombre - 1, plotDepart, intermetiaire);
             //on deplace la base vers la destination
             deplace(1, plotDepart, plotArrive);
             //on deplace les n-1 de l'intermediaire à la destination
-            deplace(nombre-1, intermetiaire, plotArrive);
+            deplace(nombre - 1, intermetiaire, plotArrive);
         }
     }
 
@@ -51,8 +50,8 @@ public class Hanoi {
         List<String> printGauche = gauche.print(nbPiece);
         List<String> printCentre = centre.print(nbPiece);
         List<String> printDroite = droite.print(nbPiece);
-        for(int i = 0 ; i < printGauche.size() ; i++){
-            System.out.println(printGauche.get(i)+printCentre.get(i)+printDroite.get(i));
+        for (int i = 0; i < printGauche.size(); i++) {
+            System.out.println(printGauche.get(i) + printCentre.get(i) + printDroite.get(i));
         }
     }
 
