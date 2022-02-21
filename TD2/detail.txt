@@ -1,0 +1,15 @@
+                                              X O
+                                               X
+                                              X00
+               XXO                       X O                       X O
+                X                        XX                         XX
+               X00    -1000              X00     1000              X00  0
+
+         XXO         XXO                                    XOO         X O
+         OX           X0                                     XX         OXX
+         X00         X00   -1000                     1000   X00         X00 0
+
+
+         XXO                                                XOO         XXO
+         0XX                                                XXX         0X0
+         X00   0                                    1000    X00         X00  0
