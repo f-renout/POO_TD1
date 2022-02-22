@@ -2,8 +2,8 @@ package morpion;
 
 import java.util.Scanner;
 
-public class Human extends Joueur {
-    public Human(Type x, Grille grille) {super(x, grille);}
+public class Humain extends Joueur {
+    public Humain(Type x, Grille grille) {super(x, grille);}
 
     @Override
     protected Coup prochainCoup() {
@@ -15,7 +15,7 @@ public class Human extends Joueur {
             x = readCoord("entrer la ligne");
             y = readCoord("entrer la colonne");
             result = new Coup(x, y, getJeton());
-            valide = grille.valide(result);
+            valide = grille.isValide(result);
         } while (!valide);
         return result;
     }

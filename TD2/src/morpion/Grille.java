@@ -11,18 +11,18 @@ public class Grille {
     }
 
     public void remplir(Coup coup) {
-        if (matrice[coup.getX()][coup.getY()] != null) {
+        if (matrice[coup.getLigne()][coup.getColonne()] != null) {
             throw new RuntimeException("coup invalide");
         }
-        matrice[coup.getX()][coup.getY()] = coup.getJeton();
+        matrice[coup.getLigne()][coup.getColonne()] = coup.getJeton();
     }
 
-    public boolean valide(Coup coup) {
-        return matrice[coup.getX()][coup.getY()] == null;
+    public boolean isValide(Coup coup) {
+        return matrice[coup.getLigne()][coup.getColonne()] == null;
     }
 
     public void annuler(Coup coup){
-        matrice[coup.getX()][coup.getY()] = null;
+        matrice[coup.getLigne()][coup.getColonne()] = null;
     }
 
     @Override

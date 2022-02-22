@@ -40,7 +40,7 @@ public class Morpion {
 
     private Joueur createJoueur(JOUEUR typeJoueur, Type x, int difficulte) {
         if (typeJoueur == JOUEUR.HUMAN) {
-            return new Human(x, grille);
+            return new Humain(x, grille);
         }
         return new IA(x, grille, difficulte);
     }

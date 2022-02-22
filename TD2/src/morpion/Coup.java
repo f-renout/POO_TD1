@@ -1,22 +1,22 @@
 package morpion;
 
 public class Coup {
-    int x;
-    int y;
+    int ligne;
+    int colonne;
     private final Jeton jeton;
 
-    public Coup(int x, int y, Jeton jeton) {
-        this.x = x;
-        this.y = y;
+    public Coup(int ligne, int colonne, Jeton jeton) {
+        this.ligne = ligne;
+        this.colonne = colonne;
         this.jeton = jeton;
     }
 
-    public int getX() {
-        return x;
+    public int getLigne() {
+        return ligne;
     }
 
-    public int getY() {
-        return y;
+    public int getColonne() {
+        return colonne;
     }
 
     public Jeton getJeton() {
@@ -25,6 +25,6 @@ public class Coup {
 
     @Override
     public String toString() {
-        return "Coup{" + "x=" + x + ", y=" + y + ", jeton=" + jeton + '}';
+        return "Coup{" + "ligne=" + ligne + ", colonne=" + colonne + ", jeton=" + jeton + '}';
     }
 }
