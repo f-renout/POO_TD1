@@ -77,7 +77,7 @@ public class Grille {
         return jeton1.type() == jeton2.type() && jeton2.type() == jeton3.type();
     }
 
-    public Type gagne() {
+    public Type gagnant() {
         Type res = verticalWinner();
         if(res==null){
             res = horizontalWinner();
@@ -114,6 +114,6 @@ public class Grille {
     }
 
     public boolean finie() {
-        return gagne()!=null||plein();
+        return gagnant() != null || plein();
     }
 }

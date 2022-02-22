@@ -30,7 +30,7 @@ public class Morpion {
             System.out.println(c);
             System.out.println(grille);
         }
-        final var gagne = grille.gagne();
+        final var gagne = grille.gagnant();
         if(gagne != null){
             System.out.printf("le joueur avec les %s a gagné", gagne);
         }else{

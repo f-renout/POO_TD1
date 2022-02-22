@@ -19,8 +19,8 @@ public class IA extends Joueur {
 
     private int evaluer() {
         if (grille.finie()) {
-            if (grille.gagne() != null) {
-                return grille.gagne() == type ? MAX : MIN;
+            if (grille.gagnant() != null) {
+                return grille.gagnant() == type ? MAX : MIN;
             }
         }
         return 0;
