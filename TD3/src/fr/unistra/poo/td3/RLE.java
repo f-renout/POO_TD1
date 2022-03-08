@@ -1,7 +1,10 @@
 package fr.unistra.poo.td3;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.stream.IntStream;
 
 import static java.lang.String.format;
 
@@ -12,10 +15,11 @@ public class RLE {
 
     public static void afficheImage(int[] image) {
         for (int n : image) {
-            if (n == NOIR)
+            if (n == NOIR) {
                 System.out.print("N");
-            else if (n == BLANC)
+            } else if (n == BLANC) {
                 System.out.print("B");
+            }
         }
         System.out.println("");
     }
@@ -48,8 +52,9 @@ public class RLE {
                 compression = compression.substring(6);
                 //on converti le pixel en chiffre et on la rajoute le bon nombre de fois (si on a lu 10 blancs, on rajoute 10 fois blancs dans la liste)
                 int couleur = Integer.parseInt(couleurString, 16);
-                for (int i = 0; i < nb; i++)
+                for (int i = 0; i < nb; i++) {
                     list.add(couleur);
+                }
             } else {
                 //bit de poids fort à 0 => controle = le nombre de pixels qui sont non compressées
                 //sinon on a X caracteres qui sont present directements
@@ -77,7 +82,7 @@ public class RLE {
         //la chaine qui contiendra le resultat de la compression
         StringBuilder compression = new StringBuilder();
         //le buffer qui ca tenir la liste des couleurs en cours d'anlyse
-        List<Integer> buffer = new ArrayList<>();
+        Queue<Integer> buffer = new LinkedList<>();
         //quelle est la derniere couleur lue
         int couleurRepetee = 0;
         //compteur sur combien de fois la derniere couleur est repetée
@@ -110,8 +115,11 @@ public class RLE {
                 //on etait dans une repetition induisant une compression et on change par ex BBBBN
             } else if (nbRepetitions > 2) {
                 stockePixelCompresses(nbRepetitions, couleurRepetee, compression);
-                //on clear notre buffer
-                buffer.subList(0, nbRepetitions).clear();
+                //on clear notre buffer (utilisation de stream, c'est la même chose que faire
+                //            for(int idx = 0 ; idx < nbRepetitions ; idx++){
+                //                    buffer.poll();
+                //                }
+                IntStream.rangeClosed(1, nbRepetitions).forEach(idx -> buffer.poll());
                 //et on traite le pixel courant => la couleur repetée est la nouvelle couleur lue et le nb de repet est 1
                 couleurRepetee = pixel;
                 nbRepetitions = 1;
@@ -126,7 +134,7 @@ public class RLE {
         return compression.toString();
     }
 
-    private static void traiterBufferEnFinDeLecture(StringBuilder compression, List<Integer> buffer, int couleurRepetee, int nbRepetitions) {
+    private static void traiterBufferEnFinDeLecture(StringBuilder compression, Queue<Integer> buffer, int couleurRepetee, int nbRepetitions) {
         //soit on a moins de 3 repet et on va stocket ce qu'on a dans le buffer sans compression
         if (nbRepetitions < 3) {
             int nb = buffer.size();
@@ -149,23 +157,18 @@ public class RLE {
         compression.append(controleString).append(couleurString);
     }
 
-    private static void stockePixelsNonCompresses(int nb, StringBuilder compression, List<Integer> buffer) {
+    private static void stockePixelsNonCompresses(int nb, StringBuilder compression, Queue<Integer> buffer) {
         String controleString = format("%04x", nb);
         compression.append(controleString);
         for (int j = 0; j < nb; j++) {
-            Integer colj = buffer.remove(0);
+            Integer colj = buffer.poll();
             String couleurString = format("%06x", colj);
             compression.append(couleurString);
         }
     }
 
     public static void main(String[] args) {
-        int[] tab = new int[]{
-                BLANC, BLANC, BLANC, NOIR,
-                NOIR, NOIR, NOIR, BLANC,
-                NOIR, BLANC, NOIR, BLANC,
-                BLANC, BLANC, BLANC, BLANC
-        };
+        int[] tab = new int[]{BLANC, BLANC, BLANC, NOIR, NOIR, NOIR, NOIR, BLANC, NOIR, BLANC, NOIR, BLANC, BLANC, BLANC, BLANC, BLANC};
 
         afficheImage(tab);
         afficheImageHexa(tab);
