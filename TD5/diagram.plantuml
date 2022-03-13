@@ -1,0 +1,39 @@
+@startuml
+abstract class Element{
+-empruntable
+-dateEmprunt
+}
+abstract class Livre
+
+abstract class Video
+
+class Roman
+class BD
+
+class CD
+Class Blueray
+
+Element <|- Livre
+Element <|- Video
+
+
+Video <|- CD
+Video <|- Blueray
+
+Livre <|- Roman
+Livre <|- BD
+
+class Bibliotheque
+
+class Client{
+-nom
+-amende
+}
+
+Bibliotheque *- Element : possede
+
+Bibliotheque *- Client : membres
+
+Client *- Element : emprunte
+
+@enduml
