@@ -15,11 +15,6 @@ public class Gutemberg {
 
     public static final String TITLE_AND_AUTHOR_EBOOK_NO = "TITLE and AUTHOR                                                     EBOOK NO.";
 
-    public void toto() throws IOException, InterruptedException {
-        String url = getLastBookUrl();
-        System.out.println(url);
-    }
-
     private String getLastBookUrl() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create("https://www.gutenberg.org/dirs/GUTINDEX.ALL")).build();
         HttpClient client = HttpClient.newHttpClient();
@@ -35,8 +30,7 @@ public class Gutemberg {
         x=x.replaceAll("\\s\\s+"," ");
         String[] s = x.split(" ");
         x= s[s.length-1];
-        String url = String.format("https://www.gutenberg.org/files/%1$s/%1$s-h/%1$s-h.htm",x);
-        return url;
+        return String.format("https://www.gutenberg.org/files/%1$s/%1$s-h/%1$s-h.htm",x);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
