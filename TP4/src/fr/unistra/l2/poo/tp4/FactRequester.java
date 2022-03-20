@@ -6,16 +6,16 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FactRequester {
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
         FactRequester fr = new FactRequester();
-        System.out.println(fr.getFact());
-        System.out.println(fr.getCategories());
+//        System.out.println(fr.getFact());
+//        System.out.println(fr.getCategories());
+        fr.parListe();
     }
 
     String getFact() throws URISyntaxException, IOException, InterruptedException {
@@ -25,9 +25,9 @@ public class FactRequester {
 
     private String parseFact(HttpResponse<String> response) {
         checkApi(response);
-        Pattern p = Pattern.compile(".*value\":\"(.*)\".*");
+        Pattern p = Pattern.compile("value\":\"([^\"]*)");
         Matcher m = p.matcher(response.body());
-        if (m.matches()) {
+        if (m.find()) {
             return m.group(1);
         }
         return "on n'a rien trouvé";
@@ -39,7 +39,7 @@ public class FactRequester {
         }
     }
 
-    List<String> getCategories() throws URISyntaxException, IOException, InterruptedException {
+    String[] getCategories() throws URISyntaxException, IOException, InterruptedException {
         HttpResponse<String> response = getStringHttpResponse("https://api.chucknorris.io/jokes/categories");
         return parseCategories(response);
     }
@@ -50,9 +50,47 @@ public class FactRequester {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    private List<String> parseCategories(HttpResponse<String> response) {
+    private String[] parseCategories(HttpResponse<String> response) {
         checkApi(response);
-        String[] split = response.body().replaceAll("[\\[\\]\"]", "").split(",");
-        return Arrays.asList(split);
+        return response.body().replaceAll("[\\[\\]\"]", "").split(",");
+    }
+
+    public void parListe() throws URISyntaxException, IOException, InterruptedException {
+        Scanner scanner = new Scanner(System.in);
+        String[] categories = getCategories();
+        int max = categories.length;
+        printCategories(categories);
+        boolean continuer = true;
+        do {
+            String input = scanner.next();
+            if ("x".equals(input)) {
+                continuer = false;
+            } else if ("h".equals(input)) {
+                printCategories(categories);
+            } else {
+                try {
+                    int i = Integer.parseInt(input);
+                    if (i > 0 && i <= max) {
+                        System.out.println(getJoke(categories[i]));
+                    }
+                } catch (NumberFormatException nfe) {
+                }
+            }
+        } while (continuer);
+    }
+
+    private String getJoke(String category) throws URISyntaxException, IOException, InterruptedException {
+        HttpResponse<String> response = getStringHttpResponse("https://api.chucknorris.io/jokes/random?category="+category);
+        return parseFact(response);
+    }
+
+    private void printCategories(String[] categories) {
+        System.out.println("Choix de la categorie");
+        int index = 0;
+        for (String category : categories) {
+            System.out.printf("%d : %s%n", index++, category);
+        }
+        System.out.printf("Entrez%n -le numero de la categorie demandée %n -h pour reafficher les categories %n -x pour quitter%n");
+
     }
 }
